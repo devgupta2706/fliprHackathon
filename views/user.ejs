@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User page</title>
+    <link rel="stylesheet" href="../static/user.css">
+</head>
+
+<body>
+    <h1>Users</h1>
+    <ul></ul>
+    <h1>Add Task</h1>
+    <form id="form">
+
+        <!-- Details -->
+        <div class="form-control">
+            <label for="taskdescription" id="label-taskdescription">Task-Description</label>
+            <!-- Input Type Text -->
+            <input type="text" name="taskdescription" id="taskdescription" placeholder="Task-Description" />
+        </div>
+
+        <div class="form-control">
+            <label for="tasktype" id="label-tasktype">Task-Type</label>
+             
+            <!-- Dropdown options -->
+            <select name="tasktype" name="tasktype" id="tasktype">
+                <option value="break">Break</option>
+                <option value="meeting">Meeting</option>
+                <option value="work">Work</option>
+            </select>
+        </div>
+
+        <div class="form-control">
+            <label for="date" id="label-date">Date</label>
+
+            <!-- Input Type Text -->
+            <input type="date" name="date" id="date" placeholder="Date" />
+        </div>
+
+        <div class="form-control">
+            <label for="time" id="label-time">Start Time</label>
+
+            <!-- Input Type Text -->
+            <input type="time" name="time" id="time" placeholder="Start Time" />
+        </div>
+
+        <div class="form-control">
+            <label for="duration" id="label-duration">Duration</label>
+
+            <!-- Input Type Text -->
+            <input type="number" name="duration" id="duration" placeholder="time in minutes" />
+        </div>
+
+        <button type="submit" value="submit">Submit
+        </button>
+    </form>
+    <button class="logout"><a href="/logout">Log Out</a></button>
+</body>
+<script>
+    const ul = document.querySelector("ul")
+    const getUsers = async () => {
+        const res = await fetch("/api/auth/getUsers")
+        const data = await res.json()
+        data.user.map(mappedUser => {
+            if (mappedUser.username !== "admin") {
+                let li = `<li> <b>Username</b> => ${mappedUser.username} <br> <b>Role</b> => ${mappedUser.role} </li>`
+                ul.innerHTML += li
+            } else {
+                return null
+            }
+        })
+    }
+    getUsers()
+</script>
+
+
+</html>

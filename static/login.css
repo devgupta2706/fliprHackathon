@@ -1,0 +1,55 @@
+body {
+     background-color: blueviolet; 
+    font-family: Verdana;
+    text-align: center;
+    font-size: 25px;
+}
+
+/* Styling the Form (Color, Padding, Shadow) */
+form {
+    /* background-color: #fff; */
+    background: linear-gradient(#3399FF,#CC66FF);
+    max-width: 500px;
+    margin:auto;
+    padding: 30px 20px;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 40px;
+}
+
+/* Styling form-control Class */
+.form-control {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+/* Styling form-control Label */
+.form-control label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Styling form-control input,
+select, textarea */
+ .form-control input,
+ .form-control textarea { 
+    border: 1px solid #777;
+    border-radius: 2px;
+    font-family: inherit;
+    padding: 10px;
+    display: block;
+    width: 95%;
+} 
+
+/* Styling Button */
+button {
+    background-color: #05c46b;
+    border: 1px solid #777;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 21px;
+    display: block;
+    width: 18%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-left: 40%;
+}

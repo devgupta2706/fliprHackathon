@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="../static/form.css">
+</head>
+
+<body>
+    <div class="display" style="background-color: red;"></div>
+    <h1>Add Employee</h1>
+    <form id="form">
+
+        <!-- Details -->
+        <div class="form-control">
+            <label for="name" id="label-name">Name</label><br />
+            <!-- Input Type Text -->
+            <input type="text" name="name" id="name" placeholder="Enter your name" />
+        </div>
+
+        <div class="form-control">
+            <label for="email" id="label-email">Email</label><br />
+
+            <!-- Input Type Email-->
+            <input type="email" name="email" id="email" placeholder="Enter your email" />
+        </div>
+
+        <div class="form-control">
+            <label for="contactNumber" id="label-contactNumber">
+                Contact Number
+            </label><br />
+
+            <!-- Input Type Text -->
+            <input type="number" name="contact" id="contactNumber" placeholder="Enter your contact Number" />
+        </div>
+
+        <div class="form-control">
+            <label for="Department" id="label-Department">
+                Department
+            </label><br />
+
+            <!-- Input Type Text -->
+            <input type="text" name="department" id="Department" placeholder="Enter your Department" />
+        </div>
+
+        <div class="form-control">
+            <label for="Doj" id="label-Doj">Joining Date</label><br />
+
+            <!-- Input Type Text -->
+            <input type="date" name="joiningdate" id="Doj" placeholder="Date of Joining" />
+        </div>
+
+        <div class="form-control">
+            <label for="password" id="label-password">Password</label><br />
+
+            <!-- Input Type Text -->
+            <input type="password" name="password" id="password" placeholder="Enter your password" />
+        </div>
+
+        <!-- Multi-line Text Input Control -->
+        <button type="submit" value="submit">Submit
+        </button>
+        <br />
+        <button class="logout"><a href="/logout">Log Out</a></button>
+    </form>
+</body>
+<script>
+    const ul = document.querySelector("ul")
+    const display = document.querySelector(".display")
+    const getUsers = async () => {
+        const res = await fetch("/api/auth/getUsers")
+        const data = await res.json()
+        data.user.map(mappedUser => {
+            if (mappedUser.username !== "admin") {
+                let li = `<li> <b>Username</b> => ${mappedUser.username} <br> <b>Role</b> => ${mappedUser.role} </li> <button class="edit">Edit Role</button> <button class="delete">Delete User</button>`
+                ul.innerHTML += li
+            } else {
+                return null
+            }
+            const editRole = document.querySelectorAll(".edit")
+            const deleteUser = document.querySelector(".delete")
+        })
+    }
+    getUsers()
+    const editRol = document.querySelectorAll('.edit')
+    const deleteUse = document.querySelector('.delete')
+    editRol.forEach((button, i) => {
+        button.addEventListener('click', async () => {
+            display.textContent = ''
+            const id = data.user[i + 1].id
+            const res = await fetch('/api/auth/update', {
+                method: 'PUT',
+                body: JSON.stringify({ role: 'admin', id }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            const dataUpdate = await res.json()
+            if (res.status === 400 || res.status === 401) {
+                document.body.scrollTop = 0
+                document.documentElement.scrollTop = 0
+                return display.textContent = `${dataUpdate.message}. ${dataUpdate.error ? dataUpdate.error : ''}`
+            }
+            location.assign('/admin')
+        })
+    });
+    const editRole = document.querySelectorAll('.edit')
+    const deleteUser = document.querySelector('.delete')
+    deleteUser.forEach((button, i) => {
+        button.addEventListener('click', async () => {
+            display.textContent = ''
+            const id = data.user[i + 1].id
+            const res = await fetch('/api/auth/deleteUser', {
+                method: 'DELETE',
+                body: JSON.stringify({ id }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            const dataDelete = await res.json()
+            if (res.status === 401) {
+                document.body.scrollTop = 0
+                document.documentElement.scrollTop = 0
+                return display.textContent = `${dataUpdate.message}. ${dataUpdate.error ? dataUpdate.error : ''}`
+            }
+            location.assign('/admin')
+        })
+    })
+</script>
+
+</html>
